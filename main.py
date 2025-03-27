@@ -22,7 +22,7 @@ async def get_order_book(url: str) -> json:
         return {"error": str(error)}
 
 
-def write_to_file(api_responses: list, symbols: list):
+def write_to_file(api_responses: list[str], symbols: list[str]) -> json:
     for i, symbol in enumerate(symbols):
         if i >= len(api_responses) or not api_responses[i]:
             print(f"Нет данных для биржи {symbol}")
@@ -39,7 +39,7 @@ def write_to_file(api_responses: list, symbols: list):
 
 class Bybit:
     @staticmethod
-    def edit_data():
+    def edit_data() -> list[dict]:
         try:
             with open('bybit_data.json', 'r') as file:
                 data = json.load(file)
@@ -52,7 +52,7 @@ class Bybit:
 
 class Binance:
     @staticmethod
-    def edit_data():
+    def edit_data() -> list[dict]:
         try:
             with open('binance_data.json', 'r') as file:
                 data = json.load(file)
@@ -65,7 +65,7 @@ class Binance:
 
 class Okx:
     @staticmethod
-    def edit_data():
+    def edit_data() -> list[dict]:
         try:
             with open('okx_data.json', 'r') as file:
                 data = json.load(file)
@@ -76,8 +76,8 @@ class Okx:
             return []
 
 
-def arbitrage(data_1, data_2, data_3, threshold=0.01):
-    def to_dict(data):
+def arbitrage(data_1: list[dict[str, float]], data_2: list[dict[str, float]], data_3: list[dict[str, float]], threshold=0.01) -> list[dict[str, str]]:
+    def to_dict(data: list[dict[str, float]]) -> dict[str, float]:
         return {list(d.keys())[0]: float(list(d.values())[0])
                 for d in data if d and isinstance(d, dict)}
 
