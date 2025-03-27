@@ -11,6 +11,8 @@ if platform.system() == 'Windows':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 
+# async
+# Запрос в 3 биржи
 async def get_order_book(url: str) -> json:
     try:
         async with aiohttp.ClientSession() as session:
@@ -22,6 +24,8 @@ async def get_order_book(url: str) -> json:
         return {"error": str(error)}
 
 
+# sync
+# Запись ответа с биржи в файл. Данные записываю не обработанные
 def write_to_file(api_responses: list[str], symbols: list[str]) -> json:
     for i, symbol in enumerate(symbols):
         if i >= len(api_responses) or not api_responses[i]:
@@ -37,6 +41,8 @@ def write_to_file(api_responses: list[str], symbols: list[str]) -> json:
             print(f"Ошибка записи {symbol}: {error}")
 
 
+# Класс для обработки данных для биржи Bybit, при необходимости можно добавлять методы. Создал в большей степени для
+# будущих улучшений. Вероятно сделаю возможность торговать, вывода средств, используя API key
 class Bybit:
     @staticmethod
     def edit_data() -> list[dict]:
@@ -50,6 +56,8 @@ class Bybit:
             return []
 
 
+# Класс для обработки данных для биржи Binance, при необходимости можно добавлять методы. Создал в большей степени для
+# будущих улучшений. Вероятно сделаю возможность торговать, вывода средств, используя API key
 class Binance:
     @staticmethod
     def edit_data() -> list[dict]:
@@ -63,6 +71,8 @@ class Binance:
             return []
 
 
+# Класс для обработки данных для биржи Okx, при необходимости можно добавлять методы. Создал в большей степени для
+# будущих улучшений. Вероятно сделаю возможность торговать, вывода средств, используя API key
 class Okx:
     @staticmethod
     def edit_data() -> list[dict]:
@@ -76,6 +86,7 @@ class Okx:
             return []
 
 
+# Находим общие пары и считаем спред
 def arbitrage(data_1: list[dict[str, float]], data_2: list[dict[str, float]], data_3: list[dict[str, float]], threshold=0.01) -> list[dict[str, str]]:
     def to_dict(data: list[dict[str, float]]) -> dict[str, float]:
         return {list(d.keys())[0]: float(list(d.values())[0])
