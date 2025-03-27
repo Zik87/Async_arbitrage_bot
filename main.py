@@ -6,7 +6,7 @@ import json
 import platform
 
 
-# У меня была ощибка при запросе, возможно, из-за моего санкционного региона. Гпт подсказал сказал как решить)
+# У меня была ошибка при запросе, возможно, из-за моего санкционного региона. Гпт подсказал сказал как решить)
 # Ошибка: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
 if platform.system() == 'Windows':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
